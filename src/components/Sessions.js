@@ -7,11 +7,11 @@ import axios from "axios";
 
 
 export default function Sessions() {
-    const { filmeId } = useParams();
+    const {idFilme } = useParams();
     const[movie,setMovie]= useState([]);
 
     useEffect(()=>{
-        const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${filmeId}/showtimes`);
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`);
         promise.then((response)=>{
             setMovie(response.data.days);
         }) ;
@@ -164,6 +164,5 @@ const Button= styled.button`
     top: 227px;
     background-color: #E8833A;
     border-radius: 3px;
-
-
+    cursor:pointer;
 `;
