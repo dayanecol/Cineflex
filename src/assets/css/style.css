@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #293845;
+}
+
+strong{
+    font-weight: 700;
+}
+
+em{
+    font-style: italic;
+    
+}
+
+
+
+
+
+/* .main{
+    margin-top: 67px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #E8833A;
+} */
+
+
+
