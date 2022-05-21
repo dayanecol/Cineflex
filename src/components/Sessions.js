@@ -8,12 +8,15 @@ import axios from "axios";
 
 export default function Sessions() {
     const {idFilme } = useParams();
-    const[movie,setMovie]= useState([]);
+    const[days,setDays]= useState([]);
+    const [movie,setMovie]=useState([]);
 
     useEffect(()=>{
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`);
         promise.then((response)=>{
-            setMovie(response.data.days);
+            setDays(response.data.days);
+            setMovie(response.data);
+
         }) ;
         
     },[]);
@@ -29,20 +32,24 @@ export default function Sessions() {
 
             </Main>
             <Content>
-                {movie.length>0 ?
+                {days.length>0 ?
                         
-                        movie.map(sessao=> <Card weekday={sessao.weekday} date={sessao.date} key={sessao.id} showtimes={sessao.showtimes} />
+                        days.map(sessao=> <Card weekday={sessao.weekday} date={sessao.date} key={sessao.id} showtimes={sessao.showtimes} />
                             )
                         :
                         <h2>Loading...</h2>
                     }
 
             </Content>        
-                  
-                    
-               
-            
-            <footer></footer>
+            <Footer>
+                    <Movie>
+                        
+                        <div className="cover">
+                            <img src={movie.posterURL} alt="cover" />
+                        </div>
+                    </Movie>
+                    <h3>{movie.title}</h3>
+            </Footer>
         </>
     );
 }
@@ -57,7 +64,7 @@ function Card({weekday,date,showtimes}) {
             <div className="hours">
                 {showtimes.map((time,id)=> {
                     return(
-                    <Link key={id} to={`/assentos/${id}`}>
+                    <Link key={id} to={`/assentos/${time.id}`}>
                         <Button className="time">{time.name}</Button>
                     </Link>
                     );
@@ -111,11 +118,7 @@ const Main= styled.div`
 
 const Content = styled.div`
     width:100%;
-    // position: absolute;
-    // left:0;
-    // top:0;
-    // margin: 170px 0px 120px 23px;
-
+    margin-bottom: 150px;
 `;
 
 const Agenda = styled.div`
@@ -165,4 +168,61 @@ const Button= styled.button`
     background-color: #E8833A;
     border-radius: 3px;
     cursor:pointer;
+    text-decoration:none;
+    color:#FFF;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0.02em;
+`;
+
+const Footer= styled.div`
+    width: 100%;
+    height: 117px;
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #DFE6ED;
+    border: 1px solid #9EADBA;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    h3{
+        font-weight: 400;
+        font-size: 26px;
+        line-height: 30px;
+        display: flex;
+        align-items: center;
+    }
+    
+`;
+
+const Movie = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items:flex-start;
+    
+    .cover{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        width: 64px;
+        height: 89px;
+        left: 10px;
+        bottom: 14px;
+        background-color: #FFFFFF;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+        cursor:pointer;
+        margin-left:10px;
+        margin-right:14px;
+    }
+
+    img{
+        width: 48px;
+        height: 72px;
+    }
+
 `;
