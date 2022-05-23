@@ -19,10 +19,6 @@ export default function Seats ({checkOut}){
 
     function submitData(event) {
         event.preventDefault();
-        alert("Mensagem enviada com sucesso!");
-        console.log(`ids: ${selectedSeat.map(seat=>seat.id)},
-        name: ${name},
-        cpf: ${cpf}`);
         const promise = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",{
             ids: selectedSeat.map(seat=>seat.id),
             name: name,

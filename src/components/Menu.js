@@ -28,12 +28,15 @@ export default function Menu() {
     );
 }
 
+
+
 const Main= styled.div`
     margin-top: 67px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left:15px;
 
     h2{
         font-size: 24px;
