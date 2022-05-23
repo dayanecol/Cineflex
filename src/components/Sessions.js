@@ -1,5 +1,3 @@
-// import sessions from "../data/sessions";
-
 import { useState, useEffect } from "react";
 import { Link, useParams } from 'react-router-dom';
 import styled from "styled-components";
@@ -10,28 +8,28 @@ export default function Sessions() {
     const {idFilme } = useParams();
     const[days,setDays]= useState([]);
     const [movie,setMovie]=useState([]);
+    const [error, setError] = useState(false);
 
     useEffect(()=>{
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`);
-        promise.then((response)=>{
-            setDays(response.data.days);
-            setMovie(response.data);
-
-        }) ;
-        
+        promise
+            .then((response)=>{
+                setDays(response.data.days);
+                setMovie(response.data);
+            })
+            .catch(err=>{
+                setError(true);
+        }) 
     },[]);
       
 
     return (
         <>
-            <Header>
-                <h1>CINEFLEX</h1>
-            </Header>
             <Main>
                 <h2>Selecione o horário</h2>
-
             </Main>
             <Content>
+                {!error ? null:<h2>ERRO!</h2>}
                 {days.length>0 ?
                         
                         days.map(sessao=> <Card weekday={sessao.weekday} date={sessao.date} key={sessao.id} showtimes={sessao.showtimes} />
@@ -43,7 +41,6 @@ export default function Sessions() {
             </Content>        
             <Footer>
                     <Movie>
-                        
                         <div className="cover">
                             <img src={movie.posterURL} alt="cover" />
                         </div>
@@ -53,7 +50,6 @@ export default function Sessions() {
         </>
     );
 }
-
 
 function Card({weekday,date,showtimes}) {
     return (
@@ -77,26 +73,6 @@ function Card({weekday,date,showtimes}) {
     );
 }
 
-const Header = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 67px;
-    position: fixed;
-    left: 0px;
-    right: 0;
-    top: 0px;
-    background-color: #C3CFD9;
-    
-
-    h1{
-        font-size: 34px;
-        line-height: 40px;
-        color: #E8833A;
-    }
-`;
-
 const Main= styled.div`
     margin-top: 67px;
     
@@ -114,7 +90,6 @@ const Main= styled.div`
     }
    
 `;
-
 
 const Content = styled.div`
     width:100%;

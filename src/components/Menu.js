@@ -1,38 +1,32 @@
 import Movies from "./Movies";
+import axios from "axios";
+import { useState,useEffect } from "react";
 import styled from "styled-components";
 
 export default function Menu() {
 
+    const [movies,setMovies]= useState([]);
+    const [error, setError] = useState(false);
+
+    useEffect(()=>{
+        const promise = axios.get("https://mock-api.driven.com.br/api/v5/cineflex/movies");
+        promise
+            .then(response=>{
+                setMovies(response.data);
+        })
+            .catch(err=>{
+                setError(true);
+        })
+    },[]);
+
     return (
-        <>
-            <Header><h1>CINEFLEX</h1></Header>
             <Main>
                 <h2>Selecione o filme</h2>
-                <Movies />
+                {!error ? null: <h2>ERRO!</h2>}
+                <Movies movies={movies}/>
             </Main>
-        </>
     );
 }
-
-
-const Header = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 67px;
-    position: fixed;
-    left: 0px;
-    right: 0;
-    top: 0px;
-    background-color: #C3CFD9;
-
-    h1{
-        font-size: 34px;
-        line-height: 40px;
-        color: #E8833A;
-    }
-`;
 
 const Main= styled.div`
     margin-top: 67px;
