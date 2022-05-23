@@ -16,7 +16,7 @@ export default function App(){
                 <Route path="/" element={<Menu />} />
                 <Route path="/sessoes/:idFilme" element={<Sessions />} />
                 <Route path="/assentos/:idSessao" element={<Seats checkOut ={(order)=> setOrder(order)} />} />
-                <Route path="/sucesso" element={<Success order={order} setOrder={setOrder}/>} />    
+                <Route path="/sucesso" element={<Success order={order} setOrder={()=>setOrder(null)}/>} />    
             </Routes>   
         </BrowserRouter>
     );

@@ -12,7 +12,6 @@ export default function Seat ({name,id,isAvailable,selected,isClicked}){
     );
 }
 
-
 function ColorBG(isAvailable,selected){
     if (selected){
         return "#8DD7CF";
